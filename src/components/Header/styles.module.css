@@ -1,0 +1,13 @@
+.containerHeader {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin-left: 2rem;
+}
+
+.containerHeader h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  color: var(--white);
+}

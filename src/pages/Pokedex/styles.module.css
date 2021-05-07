@@ -1,0 +1,17 @@
+.containerPokedex {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--background-dark);
+}
+
+@media (max-width: 1152px) {
+  .containerPokedex {
+    justify-content: center;
+  }
+}
