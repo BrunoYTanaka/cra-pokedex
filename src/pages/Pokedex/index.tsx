@@ -5,7 +5,7 @@ import Pagination from '../../components/Pagination'
 import { usePokemon } from '../../contexts/pokemonContext'
 
 const Pokedex: React.FC = () => {
-  const allPokemonPerPage = usePokemon()
+  const { allPokemonPerPage } = usePokemon()
   return (
     <>
       <div className={styles.containerPokedex}>

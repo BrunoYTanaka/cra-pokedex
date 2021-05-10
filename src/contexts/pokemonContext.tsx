@@ -1,20 +1,51 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import api from '../services/api'
 import usePagination from '../hooks/usePagination'
 
-interface Pokemon {
+export interface Pokemon {
   id: number
   name: string
   url: string
   types: string[]
 }
 
+export interface PokemonMoreInfo {
+  height: number
+  weight: number
+  sprites: {
+    back_default: string
+    front_default: string
+  }
+  abilities: {
+    ability: {
+      name: string
+    }
+  }[]
+  types: {
+    type: {
+      name: string
+    }
+  }[]
+  stats: {
+    base_stat: number
+    stat: {
+      name: string
+    }
+  }[]
+}
+
 interface PokemonPaginated {
   [key: number]: Pokemon[]
+}
+interface PokemonMapped {
+  [key: number]: Pokemon & PokemonMoreInfo
 }
 
 interface PokemonContextData {
   allPokemonPerPage: Pokemon[]
+  pokemonMapped: PokemonMapped
+  getPokemon: (id: number) => Promise<void>
 }
 
 interface AllPokemonResponse {
@@ -44,6 +75,8 @@ export const PokemonContext = createContext({} as PokemonContextData)
 export const PokemonProvider: React.FC = ({ children }) => {
   const [allPokemon, setAllPokemon] = useState<PokemonPaginated>({})
   const [allPokemonPerPage, setAllPokemonPerPage] = useState<Pokemon[]>([])
+  const [pokemonMapped, setPokemonMapped] = useState({})
+  const location = useLocation()
   const page = usePagination()
 
   useEffect(() => {
@@ -60,6 +93,10 @@ export const PokemonProvider: React.FC = ({ children }) => {
           name,
         }: AllPokemonResponse): Promise<void> => {
           const { data } = await api.get<GetPokemonResponse>(`/pokemon/${name}`)
+          setPokemonMapped(currentPokemonMapped => ({
+            ...currentPokemonMapped,
+            [data.id]: data,
+          }))
           setAllPokemon(currentState => {
             const newState = { ...currentState }
             if (!newState[page]) {
@@ -85,24 +122,37 @@ export const PokemonProvider: React.FC = ({ children }) => {
       }
       return createPokemonObject(res.data)
     }
-    if (!allPokemon[page]) {
+    if (!allPokemon[page] && location.pathname.includes('/')) {
       loadPokemon()
     }
-  }, [allPokemon, page])
+  }, [allPokemon, page, location.pathname])
 
   useEffect(() => {
     const newState = { ...allPokemon }
     setAllPokemonPerPage(newState[Number(page)] || [])
   }, [allPokemon, page])
 
+  const getPokemon = async (id: number) => {
+    const res = await api.get(`/pokemon/${id}`)
+    setPokemonMapped(currentPokemonMapped => ({
+      ...currentPokemonMapped,
+      [res.data.id]: res.data,
+    }))
+    return res.data
+  }
+
   return (
-    <PokemonContext.Provider value={{ allPokemonPerPage }}>
+    <PokemonContext.Provider
+      value={{ allPokemonPerPage, pokemonMapped, getPokemon }}
+    >
       {children}
     </PokemonContext.Provider>
   )
 }
 
-export const usePokemon = (): Pokemon[] => {
-  const { allPokemonPerPage } = useContext(PokemonContext)
-  return allPokemonPerPage
+export const usePokemon = (): PokemonContextData => {
+  const { allPokemonPerPage, pokemonMapped, getPokemon } = useContext(
+    PokemonContext,
+  )
+  return { allPokemonPerPage, pokemonMapped, getPokemon }
 }

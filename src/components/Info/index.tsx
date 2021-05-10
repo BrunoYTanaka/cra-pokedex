@@ -1,36 +1,82 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import {
+  usePokemon,
+  Pokemon,
+  PokemonMoreInfo,
+} from '../../contexts/pokemonContext'
 import styles from './styles.module.css'
 
+type PokemonData = Omit<Pokemon, 'types'> & PokemonMoreInfo
+
+interface StatsType {
+  hp: number
+  defense: number
+  attack: number
+  'special-attack': number
+  'special-defense': number
+  speed: number
+}
+
 const Info: React.FC = () => {
-  const [selected, setSelected] = useState(0)
-  const [currentImg, setCurrentImg] = useState(
-    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+  const { id } = useParams<{ id: string }>()
+  const { pokemonMapped, getPokemon } = usePokemon()
+  const [currentPokemon, setCurrentPokemon] = useState<PokemonData>(
+    {} as PokemonData,
   )
+  const [selected, setSelected] = useState(0)
+  const [currentImg, setCurrentImg] = useState('')
   const handleClick = (value: number) => setSelected(value)
 
   const handleMouse = (enter: boolean) => {
     if (enter) {
-      setCurrentImg(
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
-      )
+      setCurrentImg(currentPokemon.sprites.back_default)
     } else {
-      setCurrentImg(
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-      )
+      setCurrentImg(currentPokemon.sprites.front_default)
     }
   }
+
+  useEffect(() => {
+    const numberId = Number(id)
+    if (pokemonMapped[numberId]) {
+      setCurrentPokemon(pokemonMapped[numberId])
+      setCurrentImg(pokemonMapped[numberId].sprites.front_default)
+    } else {
+      getPokemon(numberId)
+    }
+  }, [pokemonMapped, id, getPokemon])
+
+  const abilities = useMemo(
+    () => currentPokemon.abilities?.map(a => `${a.ability.name} `),
+    [currentPokemon],
+  )
+  const types = useMemo(
+    () => currentPokemon.types?.map(t => `${t.type.name} `),
+    [currentPokemon],
+  )
+
+  const stats = useMemo(
+    () =>
+      currentPokemon.stats?.reduce((acc, value) => {
+        return {
+          ...acc,
+          [value.stat.name]: value.base_stat,
+        }
+      }, {}),
+    [currentPokemon],
+  ) as StatsType
 
   return (
     <div className={styles.containerInfo}>
       <div className={styles.content}>
-        <h1>Bulbasaur</h1>
-        <span>#001</span>
+        <h1>{currentPokemon.name}</h1>
+        <span>#{currentPokemon.id?.toString().padStart(4, '0')}</span>
       </div>
       <div
         onMouseEnter={() => handleMouse(true)}
         onMouseLeave={() => handleMouse(false)}
       >
-        <img loading="lazy" src={currentImg} alt="bulbasaur" />
+        <img loading="lazy" src={currentImg} alt={currentPokemon.name} />
       </div>
       <section className={styles.info}>
         <button
@@ -54,24 +100,24 @@ const Info: React.FC = () => {
           <table cellPadding={0}>
             <tbody>
               <tr>
-                <th>Espécie</th>
-                <td>Seed</td>
+                <th>Nome</th>
+                <td>{currentPokemon.name}</td>
               </tr>
               <tr>
                 <th>Altura</th>
-                <td>0.7cm</td>
+                <td>{currentPokemon.height} cm</td>
               </tr>
               <tr>
                 <th>Peso</th>
-                <td>6.9kg</td>
+                <td>{currentPokemon.weight / 10} kg</td>
               </tr>
               <tr>
                 <th>Habilidade(s)</th>
-                <td>Overgrow, Chlorophyl</td>
+                <td>{abilities}</td>
               </tr>
               <tr>
                 <th>Tipo(s)</th>
-                <td>Grass, Poison</td>
+                <td>{types}</td>
               </tr>
             </tbody>
           </table>
@@ -83,27 +129,27 @@ const Info: React.FC = () => {
             <tbody>
               <tr>
                 <th>HP</th>
-                <td>45</td>
+                <td>{stats.hp}</td>
               </tr>
               <tr>
                 <th>Attack</th>
-                <td>49</td>
+                <td>{stats.attack}</td>
               </tr>
               <tr>
                 <th>Defense</th>
-                <td>49</td>
+                <td>{stats.defense}</td>
               </tr>
               <tr>
                 <th>Sp. Atk</th>
-                <td>65</td>
+                <td>{stats['special-attack']}</td>
               </tr>
               <tr>
                 <th>Sp. Def</th>
-                <td>65</td>
+                <td>{stats['special-defense']}</td>
               </tr>
               <tr>
                 <th>Speed</th>
-                <td>45</td>
+                <td>{stats.speed}</td>
               </tr>
             </tbody>
           </table>
