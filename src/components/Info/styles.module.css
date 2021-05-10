@@ -1,0 +1,97 @@
+.containerInfo {
+  width: 100vw;
+  height: auto;
+  max-width: 1200px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 3px solid var(--blue-dark);
+  border-radius: 2rem;
+}
+
+.containerInfo img {
+  width: 300px;
+  height: 300px;
+}
+
+.containerInfo .content {
+  width: 100%;
+  padding: 1rem 2rem;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerInfo .content span {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.containerInfo .content h1 {
+  font-weight: 600;
+  color: var(--white);
+  margin-right: auto;
+}
+.containerInfo .info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+.containerInfo .info button {
+  background: none;
+  border: none;
+  margin: 0 1rem;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.containerInfo .info .selected {
+  text-decoration: underline;
+}
+
+.containerInfo .info button:hover {
+  color: var(--gray-line);
+}
+
+.containerInfo .divider {
+  margin: 1rem;
+  width: 100%;
+  border: 1px solid var(--text-black);
+}
+
+.containerInfo .about {
+  padding: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+}
+
+.containerInfo table {
+  width: 100%;
+}
+
+.containerInfo th {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.containerInfo td {
+  color: var(--text-highlight);
+}
+
+.containerInfo td, th {
+  font-size: 1.2rem;
+  text-align: left;
+  padding: 0.5rem 1rem;
+}
