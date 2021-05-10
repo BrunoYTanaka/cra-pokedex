@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://api.beta.mejorconsalud.com/wp-json/mc',
+  baseURL: 'https://pokeapi.co/api/v2',
 })
 
 export default api

@@ -1,20 +1,24 @@
 import React from 'react'
 import styles from './styles.module.css'
 
-const Card: React.FC = () => {
+interface CardProps {
+  id: number
+  name: string
+  url: string
+  types: string[]
+}
+
+const Card: React.FC<CardProps> = ({ name, id, url, types }) => {
   return (
     <div className={styles.containerCard}>
       <div className={styles.card}>
-        <img
-          loading="lazy"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-          alt="bulbasaur"
-        />
-        <span className={styles.number}>001</span>
-        <span className={styles.name}>Bulbasaur</span>
+        <img loading="lazy" src={url} alt={name} />
+        <span className={styles.number}>{id}</span>
+        <span className={styles.name}>{name}</span>
         <div className={styles.types}>
-          <span>grass</span>
-          <span>poison</span>
+          {types.map(type => (
+            <span key={`${id}-${type}`}>{type}</span>
+          ))}
         </div>
       </div>
     </div>
