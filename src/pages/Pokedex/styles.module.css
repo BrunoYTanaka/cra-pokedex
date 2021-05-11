@@ -8,6 +8,7 @@
   margin: 0 auto;
   padding: 2rem;
   background-color: var(--background-dark);
+  border-radius: 5px;
 }
 
 @media (max-width: 1152px) {

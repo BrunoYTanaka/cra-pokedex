@@ -1,0 +1,31 @@
+.containerNotFounded {
+  padding: 1rem;
+
+  height: calc(100vh - 200px);
+  width: 100%;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.containerNotFounded span {
+  margin: 0 auto;
+  font-size: 1.5rem;
+  font-weight: 600;
+  word-spacing: 2px;
+  color: var(--gray-line);
+}
+
+.containerNotFounded button {
+  background: none;
+  font-weight: 600;
+  border: 0;
+  font-size: 1.5rem;
+  color: var(--blue);
+}
+
+.containerNotFounded button:hover {
+  color: var(--blue-dark);
+}

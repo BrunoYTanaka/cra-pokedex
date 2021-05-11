@@ -2,6 +2,8 @@
   width: 100vw;
   height: auto;
   max-width: 1200px;
+  margin: 1rem;
+  padding: 1rem;
 
   display: flex;
   flex-direction: column;
@@ -26,8 +28,15 @@
   justify-content: space-between;
 }
 
-.containerInfo h1 {
-  text-transform: capitalize;
+.containerInfo .content button {
+  background: none;
+  border: none;
+  font-size: 0;
+  transition: filter 0.2s;
+  color: var(--white);
+}
+.containerInfo .content button:hover {
+  color: var(--gray-line);
 }
 
 .containerInfo .content span {
@@ -91,11 +100,45 @@
 }
 
 .containerInfo td {
-  color: var(--text-highlight);
+  color: var(--blue-twitter);
 }
 
 .containerInfo td, th {
   font-size: 1.2rem;
   text-align: left;
   padding: 0.5rem 1rem;
+}
+
+.loading {
+  height: calc(100vh - 200px);
+  width: 100%;
+  font-size: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading .spinner {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: rotate;
+  animation-timing-function: linear;
+}
+
+.notFound {
+  height: calc(100vh - 200px);
+  color: var(--gray-line);
+  width: 100%;
+  font-size: 1.5rem;
+  gap: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
