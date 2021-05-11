@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import api from '../services/api'
 import usePagination from '../hooks/usePagination'
 
-export interface Pokemon {
+export interface PokemonInList {
   id: number
   name: string
   url: string
@@ -36,19 +36,14 @@ export interface PokemonMoreInfo {
   }[]
 }
 
+export type Pokemon = Omit<PokemonInList, 'types'> & PokemonMoreInfo
+
 interface PokemonPaginated {
-  [key: number]: Pokemon[]
+  [key: number]: PokemonInList[]
 }
 
 interface PokemonMapped {
-  [key: number]: Omit<Pokemon, 'types'> & PokemonMoreInfo
-}
-
-interface PokemonContextData {
-  allPokemonPerPage: Pokemon[]
-  pokemonMapped: PokemonMapped
-  totalPokemon: number
-  getPokemon: (id: number) => Promise<GetPokemonResponse>
+  [key: number]: Pokemon
 }
 
 interface AllPokemonResponse {
@@ -60,15 +55,21 @@ interface GetAllPokemonResponse {
   count: number
   results: AllPokemonResponse[]
 }
-
-type GetPokemonResponse = Omit<Pokemon, 'types'> & PokemonMoreInfo
+interface PokemonContextData {
+  allPokemonPerPage: PokemonInList[]
+  pokemonMapped: PokemonMapped
+  totalPokemon: number
+  getPokemon: (id: number) => Promise<Pokemon>
+}
 
 export const PokemonContext = createContext({} as PokemonContextData)
 
 export const PokemonProvider: React.FC = ({ children }) => {
   const [allPokemon, setAllPokemon] = useState<PokemonPaginated>({})
   const [totalPokemon, setTotalPokemon] = useState(0)
-  const [allPokemonPerPage, setAllPokemonPerPage] = useState<Pokemon[]>([])
+  const [allPokemonPerPage, setAllPokemonPerPage] = useState<PokemonInList[]>(
+    [],
+  )
   const [pokemonMapped, setPokemonMapped] = useState<PokemonMapped>({})
   const location = useLocation()
   const { page } = usePagination()
@@ -86,7 +87,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
         const getPokemonByName = async ({
           name,
         }: AllPokemonResponse): Promise<void> => {
-          const { data } = await api.get<GetPokemonResponse>(`/pokemon/${name}`)
+          const { data } = await api.get<Pokemon>(`/pokemon/${name}`)
           setPokemonMapped(currentPokemonMapped => ({
             ...currentPokemonMapped,
             [data.id]: data,

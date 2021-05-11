@@ -1,13 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './styles.module.css'
+import { PokemonInList } from '../../contexts/pokemonContext'
 
-interface CardProps {
-  id: number
-  name: string
-  url: string
-  types: string[]
-}
+type CardProps = PokemonInList
 
 const Card: React.FC<CardProps> = ({ name, id, url, types }) => {
   return (
