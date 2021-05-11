@@ -61,11 +61,11 @@ const Info: React.FC = () => {
   }, [pokemonMapped, id, getPokemon])
 
   const abilities = useMemo(
-    () => currentPokemon.abilities?.map(a => `${a.ability.name} `),
+    () => currentPokemon.abilities?.map(a => a.ability.name).join(' - '),
     [currentPokemon],
   )
   const types = useMemo(
-    () => currentPokemon.types?.map(t => `${t.type.name} `),
+    () => currentPokemon.types?.map(t => t.type.name).join(' - '),
     [currentPokemon],
   )
 
@@ -126,7 +126,13 @@ const Info: React.FC = () => {
               <tbody>
                 <tr>
                   <th>Nome</th>
-                  <td>{currentPokemon.name}</td>
+                  <td style={{ textTransform: 'capitalize' }}>
+                    {currentPokemon.name}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Base de xp</th>
+                  <td>{currentPokemon.base_experience} xp</td>
                 </tr>
                 <tr>
                   <th>Altura</th>
@@ -138,11 +144,11 @@ const Info: React.FC = () => {
                 </tr>
                 <tr>
                   <th>Habilidade(s)</th>
-                  <td>{abilities}</td>
+                  <td style={{ textTransform: 'capitalize' }}>{abilities}</td>
                 </tr>
                 <tr>
                   <th>Tipo(s)</th>
-                  <td>{types}</td>
+                  <td style={{ textTransform: 'capitalize' }}>{types}</td>
                 </tr>
               </tbody>
             </table>

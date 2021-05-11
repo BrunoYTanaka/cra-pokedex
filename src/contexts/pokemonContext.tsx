@@ -13,6 +13,7 @@ export interface Pokemon {
 export interface PokemonMoreInfo {
   height: number
   weight: number
+  base_experience: number
   sprites: {
     back_default: string
     front_default: string
