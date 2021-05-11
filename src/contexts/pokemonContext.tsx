@@ -47,6 +47,7 @@ interface PokemonMapped {
 interface PokemonContextData {
   allPokemonPerPage: Pokemon[]
   pokemonMapped: PokemonMapped
+  totalPokemon: number
   getPokemon: (id: number) => Promise<GetPokemonResponse>
 }
 
@@ -56,6 +57,7 @@ interface AllPokemonResponse {
 }
 
 interface GetAllPokemonResponse {
+  count: number
   results: AllPokemonResponse[]
 }
 
@@ -65,10 +67,11 @@ export const PokemonContext = createContext({} as PokemonContextData)
 
 export const PokemonProvider: React.FC = ({ children }) => {
   const [allPokemon, setAllPokemon] = useState<PokemonPaginated>({})
+  const [totalPokemon, setTotalPokemon] = useState(0)
   const [allPokemonPerPage, setAllPokemonPerPage] = useState<Pokemon[]>([])
   const [pokemonMapped, setPokemonMapped] = useState<PokemonMapped>({})
   const location = useLocation()
-  const page = usePagination()
+  const { page } = usePagination()
 
   useEffect(() => {
     const loadPokemon = async () => {
@@ -111,6 +114,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
           return getPokemonByName(nextName)
         }, Promise.resolve())
       }
+      setTotalPokemon(res.data.count)
       return createPokemonObject(res.data)
     }
     if (!allPokemon[page] && location.pathname === '/') {
@@ -139,7 +143,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
 
   return (
     <PokemonContext.Provider
-      value={{ allPokemonPerPage, pokemonMapped, getPokemon }}
+      value={{ allPokemonPerPage, pokemonMapped, getPokemon, totalPokemon }}
     >
       {children}
     </PokemonContext.Provider>
@@ -147,8 +151,11 @@ export const PokemonProvider: React.FC = ({ children }) => {
 }
 
 export const usePokemon = (): PokemonContextData => {
-  const { allPokemonPerPage, pokemonMapped, getPokemon } = useContext(
-    PokemonContext,
-  )
-  return { allPokemonPerPage, pokemonMapped, getPokemon }
+  const {
+    allPokemonPerPage,
+    pokemonMapped,
+    getPokemon,
+    totalPokemon,
+  } = useContext(PokemonContext)
+  return { allPokemonPerPage, pokemonMapped, getPokemon, totalPokemon }
 }

@@ -20,6 +20,10 @@
   margin: 0 1rem;
 }
 
+.containerPagination button span{
+  color: var(--text-black);
+}
+
 .containerPagination button:hover {
   background-color: var(--gray-line);
 }
