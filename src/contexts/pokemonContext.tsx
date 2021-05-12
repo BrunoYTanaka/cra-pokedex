@@ -97,10 +97,6 @@ export const PokemonProvider: React.FC = ({ children }) => {
             if (!newState[page]) {
               newState[page] = []
             }
-            const hasDuplicate = newState[page].find(p => p.id === data.id)
-            if (hasDuplicate) {
-              return newState
-            }
             newState[page].push({
               name,
               url: data.sprites.front_default,

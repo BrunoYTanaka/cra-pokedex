@@ -25,9 +25,9 @@ describe('Card', () => {
     const img = getByAltText(mockCard.name)
     const type = getByText('grass')
 
-    expect(name).toBeTruthy()
-    expect(id).toBeTruthy()
-    expect(img).toBeTruthy()
-    expect(type).toBeTruthy()
+    expect(name).toBeInTheDocument()
+    expect(id).toBeInTheDocument()
+    expect(img).toBeInTheDocument()
+    expect(type).toBeInTheDocument()
   })
 })

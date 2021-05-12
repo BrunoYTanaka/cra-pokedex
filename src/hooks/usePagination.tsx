@@ -8,7 +8,7 @@ interface Pagination {
 }
 
 const usePagination = (): Pagination => {
-  const location = useLocation<{ page: string }>()
+  const location = useLocation()
   const { totalPokemon } = usePokemon()
   const totalPages = Math.ceil(totalPokemon / 20)
   const { page = 1 } = queryString.parse(location.search)

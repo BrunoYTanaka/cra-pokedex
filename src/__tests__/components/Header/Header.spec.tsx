@@ -24,7 +24,7 @@ describe('Header', () => {
       </Router>,
     )
     const name = getByText('bulbasaur')
-    expect(name).toBeTruthy()
+    expect(name).toBeInTheDocument()
   })
   it('should render not render pokemon', () => {
     const history = createMemoryHistory()
@@ -35,7 +35,7 @@ describe('Header', () => {
       </Router>,
     )
     const name = queryByText('bulbasaur')
-    expect(name).toBeFalsy()
+    expect(name).not.toBeInTheDocument()
   })
   it('should render not render pokemon with invalid id', () => {
     const history = createMemoryHistory()
@@ -46,6 +46,6 @@ describe('Header', () => {
       </Router>,
     )
     const name = queryByText('bulbasaur')
-    expect(name).toBeFalsy()
+    expect(name).not.toBeInTheDocument()
   })
 })

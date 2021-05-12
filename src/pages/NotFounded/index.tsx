@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 const NotFounded: React.FC = () => {
   const history = useHistory()
   const handleBack = () => {
-    history.goBack()
+    history.back()
   }
 
   return (
