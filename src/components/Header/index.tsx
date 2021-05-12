@@ -10,12 +10,13 @@ const getIdFromUrl = (url: string): number => {
 }
 
 const Header: React.FC = () => {
-  const location = useLocation<{ page: string }>()
+  const location = useLocation()
 
   const id = getIdFromUrl(location.pathname)
   const [name, setName] = useState('Pokedex')
 
   const { pokemonMapped } = usePokemon()
+
   useEffect(() => {
     if (pokemonMapped[Number(id)]) {
       setName(pokemonMapped[Number(id)].name)
