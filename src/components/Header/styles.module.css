@@ -3,12 +3,14 @@
   justify-content: center;
   padding: 1rem;
 }
-
-.containerHeader h1 {
-  font-size: 4rem;
-  font-weight: 700;
+.containerHeader button{
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 3.5rem;
+  font-weight: 600;
   letter-spacing: 0.2rem;
   color: var(--white);
   text-transform: capitalize;
-  cursor: default;
+  cursor: pointer;
 }

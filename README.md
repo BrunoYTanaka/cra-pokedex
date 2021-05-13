@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# Pokedex
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Table of Content
 
-## Available Scripts
+- [Table of Content](#table-of-content)
+  - [1. About The Project](#1-about-the-project)
+  - [2. Libraries & Frameworks](#2-libraries--frameworks)
+  - [3. Installation & Set Up](#3-installation--set-up)
 
-In the project directory, you can run:
+# 1. About the project
+    Lists and show each pokemon stats and basic informations, using the public pokemon [api(https://pokeapi.co/).
 
-### `yarn start`
+# 2. Libraries & Frameworks
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+| Name                                                     | Description                                                            |
+| -------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Create React App ](https://create-react-app.dev/)           |Create React App is an officially supported way to create single-page React applications. It offers a modern build setup with no configuration.               |
+| [React Router](https://reactrouter.com/) | Declarative routing for React |
+| [Axios](https://axios-http.com/)|   Axios is a simple promise based HTTP client for the browser and node.js.                      |
+| [React Icons](https://react-icons.github.io/react-icons/)| Include popular icons in your React projects easily with react-icons, which utilizes ES6 imports that allows you to include only the icons that your project is using.                              |
+| [Jest](https://jestjs.io/)    | A delightful JavaScript Testing Framework with a focus on simplicity. |
+| [React Testing Library](https://testing-library.com/) |Simple and complete testing utilities that encourage good testing practices. |
+| [React Hooks Testing Library](https://react-hooks-testing-library.com/) | Simple and complete React hooks testing utilities that encourage good testing practices. |
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+# 3. Installation & Set Up
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone this repository
 
-### `yarn build`
+```bash
+  git clone https://github.com/BrunoYTanaka/cra-pokedex.git
+```
+2. Enter the repository folder
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+   cd cra-pokedex
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install the dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+   yarn install or npm install
+```
 
-### `yarn eject`
+4. Start application in development mode
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+  yarn start or npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

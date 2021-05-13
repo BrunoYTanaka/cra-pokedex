@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { usePokemon } from '../../contexts/pokemonContext'
 import styles from './styles.module.css'
 
@@ -11,11 +11,15 @@ const getIdFromUrl = (url: string): number => {
 
 const Header: React.FC = () => {
   const location = useLocation()
-
+  const history = useHistory()
   const id = getIdFromUrl(location.pathname)
   const [name, setName] = useState('Pokedex')
 
   const { pokemonMapped } = usePokemon()
+
+  const handleClick = () => {
+    history.push('/')
+  }
 
   useEffect(() => {
     if (pokemonMapped[Number(id)]) {
@@ -26,7 +30,9 @@ const Header: React.FC = () => {
   }, [id, pokemonMapped])
   return (
     <div className={styles.containerHeader}>
-      <h1>{name}</h1>
+      <button type="button" onClick={handleClick}>
+        {name}
+      </button>
     </div>
   )
 }
