@@ -8,7 +8,7 @@
   - [3. Installation & Set Up](#3-installation--set-up)
 
 # 1. About the project
-    Lists and show each pokemon stats and basic informations, using the public pokemon [api(https://pokeapi.co/).
+  Lists and show each pokemon stats and basic informations, using the public pokemon  [api](https://pokeapi.co/).
 
 # 2. Libraries & Frameworks
 
@@ -49,4 +49,12 @@
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+6. Run tests (Opcional)
+
+```bash
+  yarn test or npm test
+```
+
+
 
