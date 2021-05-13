@@ -10,7 +10,10 @@ interface InfoProps {
   loading: boolean
   handleBack: () => void
   handleMouse: (value: boolean) => void
-  currentImg: string
+  currentImg: {
+    url: string
+    name: string
+  }
   id: number
   name: string
   base_experience: number
@@ -60,7 +63,7 @@ const Info: React.FC<InfoProps> = ({
           onMouseEnter={() => handleMouse(true)}
           onMouseLeave={() => handleMouse(false)}
         >
-          <img loading="lazy" src={currentImg} alt={name} />
+          <img loading="lazy" src={currentImg.url} alt={currentImg.name} />
         </div>
         <section className={styles.info}>
           <button

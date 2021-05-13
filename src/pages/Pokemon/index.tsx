@@ -14,6 +14,11 @@ export interface StatsType {
   speed: number
 }
 
+interface ImgType {
+  url: string
+  name: string
+}
+
 const Pokemon: React.FC = () => {
   const { getPokemon } = usePokemon()
   const { id } = useParams<{ id: string }>()
@@ -21,13 +26,19 @@ const Pokemon: React.FC = () => {
   const [notFounded, setNotFounded] = useState(false)
   const [loading, setLoading] = useState(false)
   const [currentPokemon, setCurrentPokemon] = useState<IPokemon>({} as IPokemon)
-  const [currentImg, setCurrentImg] = useState('')
+  const [currentImg, setCurrentImg] = useState<ImgType>({} as ImgType)
 
   const handleMouse = (enter: boolean) => {
     if (enter) {
-      setCurrentImg(currentPokemon.sprites.back_default)
+      setCurrentImg({
+        url: currentPokemon.sprites.back_default,
+        name: `back-img-${currentPokemon.name}`,
+      })
     } else {
-      setCurrentImg(currentPokemon.sprites.front_default)
+      setCurrentImg({
+        url: currentPokemon.sprites.front_default,
+        name: `front-img-${currentPokemon.name}`,
+      })
     }
   }
 
@@ -41,7 +52,10 @@ const Pokemon: React.FC = () => {
     getPokemon(numberId)
       .then(pokemon => {
         setCurrentPokemon(pokemon)
-        setCurrentImg(pokemon.sprites.front_default)
+        setCurrentImg({
+          url: pokemon.sprites.front_default,
+          name: `front-img-${pokemon.name}`,
+        })
       })
       .catch(() => {
         setNotFounded(true)
