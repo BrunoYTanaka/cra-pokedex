@@ -92,18 +92,22 @@ export const PokemonProvider: React.FC = ({ children }) => {
             ...currentPokemonMapped,
             [data.id]: data,
           }))
-          setAllPokemon(currentState => {
-            const newState = { ...currentState }
-            if (!newState[page]) {
-              newState[page] = []
+          setAllPokemon(currentAllPokemon => {
+            const newAllPokemon = { ...currentAllPokemon }
+            if (!newAllPokemon[page]) {
+              newAllPokemon[page] = []
             }
-            newState[page].push({
+            const hasDuplicate = newAllPokemon[page].find(p => p.id === data.id)
+            if (hasDuplicate) {
+              return newAllPokemon
+            }
+            newAllPokemon[page].push({
               name,
               url: data.sprites.front_default,
               id: data.id,
               types: data.types.map(type => type.type.name),
             })
-            return newState
+            return newAllPokemon
           })
         }
         results.reduce(async (previousPromise: Promise<void>, nextName) => {

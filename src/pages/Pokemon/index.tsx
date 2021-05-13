@@ -32,7 +32,7 @@ const Pokemon: React.FC = () => {
   }
 
   const handleBack = () => {
-    history.back()
+    history.goBack()
   }
 
   useEffect(() => {
