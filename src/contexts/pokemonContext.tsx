@@ -126,7 +126,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
   useEffect(() => {
     if (location.pathname === '/') {
       const newState = { ...allPokemon }
-      setAllPokemonPerPage(newState[Number(page)] || [])
+      setAllPokemonPerPage(newState[page] || [])
     }
   }, [allPokemon, page, location.pathname])
 

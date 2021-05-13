@@ -11,8 +11,24 @@
   border-radius: 5px;
 }
 
+.withoutResults {
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: var(--blue);
+  font-weight: 600;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 1152px) {
   .containerPokedex {
     justify-content: center;
+  }
+  .withoutResults{
+    font-size: 1.2rem;
   }
 }

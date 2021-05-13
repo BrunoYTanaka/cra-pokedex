@@ -8,18 +8,26 @@ const Pokedex: React.FC = () => {
   const { allPokemonPerPage } = usePokemon()
   return (
     <>
-      <div className={styles.containerPokedex}>
-        {allPokemonPerPage.map(pokemon => (
-          <Card
-            key={pokemon.id}
-            id={pokemon.id}
-            name={pokemon.name}
-            url={pokemon.url}
-            types={pokemon.types}
-          />
-        ))}
-      </div>
-      <Pagination />
+      {allPokemonPerPage.length > 0 ? (
+        <>
+          <div className={styles.containerPokedex}>
+            {allPokemonPerPage.map(pokemon => (
+              <Card
+                key={pokemon.id}
+                id={pokemon.id}
+                name={pokemon.name}
+                url={pokemon.url}
+                types={pokemon.types}
+              />
+            ))}
+          </div>
+          <Pagination />
+        </>
+      ) : (
+        <div className={styles.withoutResults}>
+          <p>Nenhum resultado encontrado</p>
+        </div>
+      )}
     </>
   )
 }

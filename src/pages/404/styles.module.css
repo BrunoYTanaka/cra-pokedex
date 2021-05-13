@@ -1,4 +1,4 @@
-.containerNotFounded {
+.containerNotFound {
   padding: 1rem;
 
   height: calc(100vh - 200px);
@@ -10,7 +10,7 @@
   flex-wrap: wrap;
 }
 
-.containerNotFounded span {
+.containerNotFound span {
   margin: 0 auto;
   font-size: 1.5rem;
   font-weight: 600;
@@ -18,14 +18,15 @@
   color: var(--gray-line);
 }
 
-.containerNotFounded button {
+.containerNotFound button {
   background: none;
+  margin: 0 0.5rem;
   font-weight: 600;
   border: 0;
   font-size: 1.5rem;
   color: var(--blue);
 }
 
-.containerNotFounded button:hover {
+.containerNotFound button:hover {
   color: var(--blue-dark);
 }

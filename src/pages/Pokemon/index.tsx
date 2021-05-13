@@ -15,9 +15,9 @@ export interface StatsType {
 }
 
 const Pokemon: React.FC = () => {
+  const { getPokemon } = usePokemon()
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const { pokemonMapped, getPokemon } = usePokemon()
   const [notFounded, setNotFounded] = useState(false)
   const [loading, setLoading] = useState(false)
   const [currentPokemon, setCurrentPokemon] = useState<IPokemon>({} as IPokemon)
@@ -47,7 +47,7 @@ const Pokemon: React.FC = () => {
         setNotFounded(true)
       })
       .finally(() => setLoading(false))
-  }, [pokemonMapped, id, getPokemon])
+  }, [id, getPokemon])
 
   const abilities = useMemo(
     () => currentPokemon.abilities?.map(a => a.ability.name).join(' - '),

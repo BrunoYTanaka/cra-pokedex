@@ -2,14 +2,14 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styles from './styles.module.css'
 
-const NotFounded: React.FC = () => {
+const NotFound: React.FC = () => {
   const history = useHistory()
   const handleBack = () => {
-    history.back()
+    history.goBack()
   }
 
   return (
-    <div className={styles.containerNotFounded}>
+    <div className={styles.containerNotFound}>
       <span>Página não encontrada</span>
       <span>
         Clique
@@ -22,4 +22,4 @@ const NotFounded: React.FC = () => {
   )
 }
 
-export default NotFounded
+export default NotFound
