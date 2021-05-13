@@ -2,18 +2,16 @@ import React, { useState } from 'react'
 import { ImSpinner9 } from 'react-icons/im'
 import { GrStatusWarning } from 'react-icons/gr'
 import { BsArrowLeftShort } from 'react-icons/bs'
-import { StatsType } from '../../pages/Pokemon'
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
+import { useHistory } from 'react-router-dom'
+import { StatsType, ImgType } from '../../pages/Pokemon'
 import styles from './styles.module.css'
 
 interface InfoProps {
   notFounded: boolean
   loading: boolean
-  handleBack: () => void
-  handleMouse: (value: boolean) => void
-  currentImg: {
-    url: string
-    name: string
-  }
+  frontImg: ImgType
+  backImg: ImgType
   id: number
   name: string
   base_experience: number
@@ -25,9 +23,8 @@ interface InfoProps {
 }
 
 const Info: React.FC<InfoProps> = ({
-  currentImg,
-  handleBack,
-  handleMouse,
+  backImg,
+  frontImg,
   loading,
   notFounded,
   id,
@@ -40,7 +37,14 @@ const Info: React.FC<InfoProps> = ({
   weight,
 }) => {
   const [selected, setSelected] = useState(0)
+  const [isFrontImg, setIsFrontImg] = useState(true)
   const handleClick = (value: number) => setSelected(value)
+  const handleImg = (value: boolean) => setIsFrontImg(value)
+  const history = useHistory()
+
+  const handleBack = () => {
+    history.goBack()
+  }
 
   const Content = () => {
     if (notFounded) {
@@ -59,11 +63,18 @@ const Info: React.FC<InfoProps> = ({
           </button>
           <span>#{id?.toString().padStart(4, '0')}</span>
         </div>
-        <div
-          onMouseEnter={() => handleMouse(true)}
-          onMouseLeave={() => handleMouse(false)}
-        >
-          <img loading="lazy" src={currentImg.url} alt={currentImg.name} />
+        <div className={styles.imgContainer}>
+          <button type="button" onClick={() => handleImg(true)}>
+            <IoIosArrowBack size={24} />
+          </button>
+          <img
+            loading="lazy"
+            src={isFrontImg ? frontImg.url : backImg.url}
+            alt={isFrontImg ? frontImg.name : backImg.name}
+          />
+          <button type="button" onClick={() => handleImg(false)}>
+            <IoIosArrowForward size={24} />
+          </button>
         </div>
         <section className={styles.info}>
           <button

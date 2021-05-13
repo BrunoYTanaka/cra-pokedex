@@ -13,6 +13,19 @@
   border-radius: 2rem;
 }
 
+.containerInfo .imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerInfo .imgContainer button {
+  background: none;
+  border: none;
+  right: -10px;
+  color: var(--white);
+}
+
 .containerInfo img {
   width: 300px;
   height: 300px;

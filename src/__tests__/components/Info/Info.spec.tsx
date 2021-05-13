@@ -1,21 +1,24 @@
-import React from 'react'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
-import { fireEvent, render, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { act } from 'react-dom/test-utils'
+import { fireEvent, render } from '@testing-library/react'
 import Info from '../../../components/Info'
 
-const mockedHandleBack = jest.fn()
-const mockedHandleMouse = jest.fn()
+const mockedGoBack = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    goBack: mockedGoBack,
+  }),
+}))
 
 const mockedPokemon = {
-  currentImg: {
-    url: 'img-url',
-    name: 'front-img-url',
+  frontImg: {
+    url: 'front-url-mg',
+    name: 'front-img',
+  },
+  backImg: {
+    url: 'back-url-img',
+    name: 'back-img',
   },
   handleBack: () => mockedHandleBack,
-  handleMouse: () => mockedHandleMouse,
   loading: false,
   notFounded: false,
   id: 1,
@@ -39,7 +42,7 @@ describe('Info', () => {
   it('should render a info pokemon', () => {
     const { getByText, getByAltText } = render(<Info {...mockedPokemon} />)
     const name = getByText(mockedPokemon.name)
-    const img = getByAltText(mockedPokemon.currentImg.name)
+    const img = getByAltText('front-img')
     const height = getByText(`${mockedPokemon.height} cm`)
     expect(img).toBeInTheDocument()
     expect(name).toBeInTheDocument()
@@ -52,7 +55,7 @@ describe('Info', () => {
     )
     const baseStatusBtn = getByRole('button', { name: 'Base status' })
     fireEvent.click(baseStatusBtn)
-    const img = getByAltText(mockedPokemon.currentImg.name)
+    const img = getByAltText('front-img')
     const hp = queryByText(mockedPokemon.stats.hp)
     const attack = queryByText(mockedPokemon.stats.hp)
     const height = queryByText(mockedPokemon.height)
@@ -76,21 +79,23 @@ describe('Info', () => {
     expect(height).toBeInTheDocument()
   })
 
-  it('should test mouse event ', async () => {
-    const { getByAltText, rerender } = render(<Info {...mockedPokemon} />)
-    const img = getByAltText(mockedPokemon.currentImg.name)
-    expect(img).toBeInTheDocument()
-    fireEvent.mouseEnter(img)
-    fireEvent.mouseLeave(img)
-    const newMockedPokemon = {
-      ...mockedPokemon,
-      currentImg: {
-        url: 'img-url',
-        name: 'back-img-url',
-      },
-    }
-    rerender(<Info {...newMockedPokemon} />)
-    const backImg = getByAltText('back-img-url')
+  it('should test buttons img ', async () => {
+    const { queryAllByRole, getByAltText } = render(<Info {...mockedPokemon} />)
+    const [, frontImgBtn, backImgBtn] = queryAllByRole('button')
+
+    fireEvent.click(frontImgBtn)
+    const frontImg = getByAltText('front-img')
+    expect(frontImg).toBeInTheDocument()
+    fireEvent.click(backImgBtn)
+    const backImg = getByAltText('back-img')
     expect(backImg).toBeInTheDocument()
+  })
+
+  it('should go back', () => {
+    const { queryAllByRole } = render(<Info {...mockedPokemon} />)
+    const [goBackBtn] = queryAllByRole('button')
+
+    fireEvent.click(goBackBtn)
+    expect(mockedGoBack).toHaveBeenCalled()
   })
 })

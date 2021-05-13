@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useMemo, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Info from '../../components/Info'
 import { usePokemon, Pokemon as IPokemon } from '../../contexts/pokemonContext'
 import styles from './styles.module.css'
@@ -14,7 +14,7 @@ export interface StatsType {
   speed: number
 }
 
-interface ImgType {
+export interface ImgType {
   url: string
   name: string
 }
@@ -22,29 +22,9 @@ interface ImgType {
 const Pokemon: React.FC = () => {
   const { getPokemon } = usePokemon()
   const { id } = useParams<{ id: string }>()
-  const history = useHistory()
   const [notFounded, setNotFounded] = useState(false)
   const [loading, setLoading] = useState(false)
   const [currentPokemon, setCurrentPokemon] = useState<IPokemon>({} as IPokemon)
-  const [currentImg, setCurrentImg] = useState<ImgType>({} as ImgType)
-
-  const handleMouse = (enter: boolean) => {
-    if (enter) {
-      setCurrentImg({
-        url: currentPokemon.sprites.back_default,
-        name: `back-img-${currentPokemon.name}`,
-      })
-    } else {
-      setCurrentImg({
-        url: currentPokemon.sprites.front_default,
-        name: `front-img-${currentPokemon.name}`,
-      })
-    }
-  }
-
-  const handleBack = () => {
-    history.goBack()
-  }
 
   useEffect(() => {
     const numberId = Number(id)
@@ -52,10 +32,6 @@ const Pokemon: React.FC = () => {
     getPokemon(numberId)
       .then(pokemon => {
         setCurrentPokemon(pokemon)
-        setCurrentImg({
-          url: pokemon.sprites.front_default,
-          name: `front-img-${pokemon.name}`,
-        })
       })
       .catch(() => {
         setNotFounded(true)
@@ -63,10 +39,27 @@ const Pokemon: React.FC = () => {
       .finally(() => setLoading(false))
   }, [id, getPokemon])
 
+  const frontImg = useMemo(
+    () => ({
+      url: currentPokemon.sprites?.front_default,
+      name: `front-${currentPokemon.name}`,
+    }),
+    [currentPokemon],
+  )
+
+  const backImg = useMemo(
+    () => ({
+      url: currentPokemon.sprites?.back_default,
+      name: `back-${currentPokemon.name}`,
+    }),
+    [currentPokemon],
+  )
+
   const abilities = useMemo(
     () => currentPokemon.abilities?.map(a => a.ability.name).join(' - '),
     [currentPokemon],
   )
+
   const types = useMemo(
     () => currentPokemon.types?.map(t => t.type.name).join(' - '),
     [currentPokemon],
@@ -82,11 +75,13 @@ const Pokemon: React.FC = () => {
       }, {}),
     [currentPokemon],
   ) as StatsType
+
   return (
     <div className={styles.containerPokemon}>
       <Info
         stats={stats}
-        currentImg={currentImg}
+        frontImg={frontImg}
+        backImg={backImg}
         notFounded={notFounded}
         name={currentPokemon.name}
         id={currentPokemon.id}
@@ -96,8 +91,6 @@ const Pokemon: React.FC = () => {
         base_experience={currentPokemon.base_experience}
         abilities={abilities}
         types={types}
-        handleBack={handleBack}
-        handleMouse={handleMouse}
       />
     </div>
   )
