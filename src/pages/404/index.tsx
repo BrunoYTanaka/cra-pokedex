@@ -4,8 +4,8 @@ import styles from './styles.module.css'
 
 const NotFound: React.FC = () => {
   const history = useHistory()
-  const handleBack = () => {
-    history.goBack()
+  const handleGoHome = () => {
+    history.push('/')
   }
 
   return (
@@ -13,7 +13,7 @@ const NotFound: React.FC = () => {
       <span>Página não encontrada</span>
       <span>
         Clique
-        <button onClick={handleBack} type="button">
+        <button onClick={handleGoHome} type="button">
           aqui
         </button>
         para voltar

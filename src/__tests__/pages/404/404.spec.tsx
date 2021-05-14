@@ -4,7 +4,7 @@ import NotFound from '../../../pages/404'
 const mockedGoBack = jest.fn()
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({
-    goBack: mockedGoBack,
+    push: mockedGoBack,
   }),
 }))
 

@@ -18,7 +18,7 @@
   color: var(--gray-line);
 }
 
-.containerNotFound button {
+.containerNotFound a {
   background: none;
   margin: 0 0.5rem;
   font-weight: 600;
@@ -27,6 +27,6 @@
   color: var(--blue);
 }
 
-.containerNotFound button:hover {
+.containerNotFound a:hover {
   color: var(--blue-dark);
 }
