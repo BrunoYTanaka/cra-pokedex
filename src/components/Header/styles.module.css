@@ -3,7 +3,7 @@
   justify-content: center;
   padding: 1rem;
 }
-.containerHeader button{
+.containerHeader a {
   background: none;
   border: 0;
   cursor: pointer;

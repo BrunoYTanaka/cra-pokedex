@@ -18,7 +18,7 @@ const mockedPokemon = {
     url: 'back-url-img',
     name: 'back-img',
   },
-  handleBack: () => mockedHandleBack,
+  handleBack: () => jest.fn(),
   loading: false,
   notFounded: false,
   id: 1,
@@ -40,8 +40,10 @@ const mockedPokemon = {
 
 describe('Info', () => {
   it('should render a info pokemon', () => {
-    const { getByText, getByAltText } = render(<Info {...mockedPokemon} />)
-    const name = getByText(mockedPokemon.name)
+    const { getByText, getByAltText, queryAllByText } = render(
+      <Info {...mockedPokemon} />,
+    )
+    const [name] = queryAllByText(mockedPokemon.name)
     const img = getByAltText('front-img')
     const height = getByText(`${mockedPokemon.height} cm`)
     expect(img).toBeInTheDocument()
@@ -79,14 +81,24 @@ describe('Info', () => {
     expect(height).toBeInTheDocument()
   })
 
-  it('should test buttons img ', async () => {
+  it('should show back-img after clicking right arrow ', async () => {
     const { queryAllByRole, getByAltText } = render(<Info {...mockedPokemon} />)
-    const [, frontImgBtn, backImgBtn] = queryAllByRole('button')
+    const [, , backImgBtn] = queryAllByRole('button')
 
-    fireEvent.click(frontImgBtn)
     const frontImg = getByAltText('front-img')
     expect(frontImg).toBeInTheDocument()
     fireEvent.click(backImgBtn)
+    const backImg = getByAltText('back-img')
+    expect(backImg).toBeInTheDocument()
+  })
+
+  it('should show back-img after clicking right left ', async () => {
+    const { queryAllByRole, getByAltText } = render(<Info {...mockedPokemon} />)
+    const [, frontImgBtn] = queryAllByRole('button')
+
+    const frontImg = getByAltText('front-img')
+    expect(frontImg).toBeInTheDocument()
+    fireEvent.click(frontImgBtn)
     const backImg = getByAltText('back-img')
     expect(backImg).toBeInTheDocument()
   })

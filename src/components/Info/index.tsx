@@ -61,10 +61,11 @@ const Info: React.FC<InfoProps> = ({
           <button type="button" onClick={handleBack}>
             <BsArrowLeftShort size={36} />
           </button>
+          <span>{name}</span>
           <span>#{id?.toString().padStart(4, '0')}</span>
         </div>
         <div className={styles.imgContainer}>
-          <button type="button" onClick={() => handleImg(true)}>
+          <button type="button" onClick={() => handleImg(!isFrontImg)}>
             <IoIosArrowBack size={24} />
           </button>
           <img
@@ -72,7 +73,7 @@ const Info: React.FC<InfoProps> = ({
             src={isFrontImg ? frontImg.url : backImg.url}
             alt={isFrontImg ? frontImg.name : backImg.name}
           />
-          <button type="button" onClick={() => handleImg(false)}>
+          <button type="button" onClick={() => handleImg(!isFrontImg)}>
             <IoIosArrowForward size={24} />
           </button>
         </div>

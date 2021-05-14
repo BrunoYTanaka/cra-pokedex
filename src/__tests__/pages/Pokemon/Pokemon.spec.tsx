@@ -1,16 +1,9 @@
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, History } from 'history'
-import {
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
-import { cleanup } from '@testing-library/react-hooks'
 import { PokemonContext } from '../../../contexts/pokemonContext'
 import Pokemon from '../../../pages/Pokemon'
-
-// const mockedPokemonData = PokemonData as jest.Mocked<typeof PokemonData>
 
 let history: History
 
@@ -117,7 +110,7 @@ describe('Pokemon Page', () => {
   })
   it('should render Pokemon page', async () => {
     const promise = Promise.resolve()
-    const { getByText } = render(
+    const { queryAllByText } = render(
       <Router history={history}>
         <PokemonContext.Provider
           value={{
@@ -132,11 +125,11 @@ describe('Pokemon Page', () => {
       </Router>,
     )
     await act(() => promise)
-    const name = getByText('charizard')
+    const [name] = queryAllByText('charizard')
     expect(name).toBeInTheDocument()
   })
   it('should not render Pokemon page not found', async () => {
-    const { getByText, debug } = render(
+    const { getByText } = render(
       <Router history={history}>
         <PokemonContext.Provider
           value={{

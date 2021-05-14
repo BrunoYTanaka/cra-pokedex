@@ -1,4 +1,3 @@
-import React from 'react'
 import { renderHook, WrapperComponent } from '@testing-library/react-hooks'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, History } from 'history'
