@@ -1,5 +1,9 @@
 # Pokedex
 
+# Preview
+
+<img src="preview.gif" width="500px">
+
 # Table of Content
 
 - [Table of Content](#table-of-content)
