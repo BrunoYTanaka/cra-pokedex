@@ -24,6 +24,28 @@
   flex-wrap: wrap;
 }
 
+.loading {
+  height: calc(100vh - 200px);
+  width: 100%;
+  font-size: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading .spinner {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: rotate;
+  animation-timing-function: linear;
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 1152px) {
   .containerPokedex {
     justify-content: center;

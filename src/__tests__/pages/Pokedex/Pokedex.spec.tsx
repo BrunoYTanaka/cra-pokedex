@@ -16,6 +16,7 @@ describe('Pokedex Page', () => {
   it('should render pokedex', () => {
     jest.spyOn(mockedPokemonData, 'usePokemon').mockImplementationOnce(() => ({
       getPokemon: jest.fn(),
+      loading: false,
       pokemonMapped: {},
       totalPokemon: 1,
       allPokemonPerPage: [
@@ -39,6 +40,7 @@ describe('Pokedex Page', () => {
     jest.spyOn(mockedPokemonData, 'usePokemon').mockImplementationOnce(() => ({
       getPokemon: jest.fn(),
       pokemonMapped: {},
+      loading: false,
       totalPokemon: 1,
       allPokemonPerPage: [],
     }))
@@ -49,5 +51,21 @@ describe('Pokedex Page', () => {
     )
     const msg = getByText('Nenhum resultado encontrado')
     expect(msg).toBeInTheDocument()
+  })
+  it('should render loading', () => {
+    jest.spyOn(mockedPokemonData, 'usePokemon').mockImplementationOnce(() => ({
+      getPokemon: jest.fn(),
+      pokemonMapped: {},
+      loading: true,
+      totalPokemon: 1,
+      allPokemonPerPage: [],
+    }))
+    const { queryByText } = render(
+      <Router history={history}>
+        <Pokedex />
+      </Router>,
+    )
+    const msg = queryByText('Nenhum resultado encontrado')
+    expect(msg).not.toBeInTheDocument()
   })
 })

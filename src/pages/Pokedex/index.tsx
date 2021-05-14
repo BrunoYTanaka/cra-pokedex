@@ -1,12 +1,14 @@
 import React from 'react'
+import { ImSpinner9 } from 'react-icons/im'
 import styles from './styles.module.css'
 import Card from '../../components/Card'
 import Pagination from '../../components/Pagination'
 import { usePokemon } from '../../contexts/pokemonContext'
 
 const Pokedex: React.FC = () => {
-  const { allPokemonPerPage } = usePokemon()
-  return (
+  const { allPokemonPerPage, loading } = usePokemon()
+
+  const Content = () => (
     <>
       {allPokemonPerPage.length > 0 ? (
         <>
@@ -27,6 +29,18 @@ const Pokedex: React.FC = () => {
         <div className={styles.withoutResults}>
           <p>Nenhum resultado encontrado</p>
         </div>
+      )}
+    </>
+  )
+
+  return (
+    <>
+      {loading ? (
+        <div className={styles.loading}>
+          <ImSpinner9 size={36} className={styles.spinner} />
+        </div>
+      ) : (
+        <Content />
       )}
     </>
   )

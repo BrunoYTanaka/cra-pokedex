@@ -59,6 +59,7 @@ interface PokemonContextData {
   allPokemonPerPage: PokemonInList[]
   pokemonMapped: PokemonMapped
   totalPokemon: number
+  loading: boolean
   getPokemon: (id: number) => Promise<Pokemon>
 }
 
@@ -66,6 +67,7 @@ export const PokemonContext = createContext({} as PokemonContextData)
 
 export const PokemonProvider: React.FC = ({ children }) => {
   const [allPokemon, setAllPokemon] = useState<PokemonPaginated>({})
+  const [loading, setLoading] = useState(false)
   const [totalPokemon, setTotalPokemon] = useState(0)
   const [allPokemonPerPage, setAllPokemonPerPage] = useState<PokemonInList[]>(
     [],
@@ -109,6 +111,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
             })
             return newAllPokemon
           })
+          setLoading(false)
         }
         results.reduce(async (previousPromise: Promise<void>, nextName) => {
           await previousPromise
@@ -119,6 +122,7 @@ export const PokemonProvider: React.FC = ({ children }) => {
       return createPokemonObject(res.data)
     }
     if (!allPokemon[page] && location.pathname === '/') {
+      setLoading(true)
       loadPokemon()
     }
   }, [allPokemon, page, location.pathname])
@@ -144,7 +148,13 @@ export const PokemonProvider: React.FC = ({ children }) => {
 
   return (
     <PokemonContext.Provider
-      value={{ allPokemonPerPage, pokemonMapped, getPokemon, totalPokemon }}
+      value={{
+        allPokemonPerPage,
+        pokemonMapped,
+        getPokemon,
+        totalPokemon,
+        loading,
+      }}
     >
       {children}
     </PokemonContext.Provider>
@@ -157,6 +167,7 @@ export const usePokemon = (): PokemonContextData => {
     pokemonMapped,
     getPokemon,
     totalPokemon,
+    loading,
   } = useContext(PokemonContext)
-  return { allPokemonPerPage, pokemonMapped, getPokemon, totalPokemon }
+  return { allPokemonPerPage, pokemonMapped, getPokemon, totalPokemon, loading }
 }
